@@ -2,19 +2,16 @@ const chatForm = get("form");
 const chatInput = get("input");
 const chatBox = get("main");
 
-appendMessage("bot", "This is a bot bubble");
-appendMessage("user", "This is a user bubble");
-
 chatForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const text = chatInput.value;
   if (!text) return;
 
   query({
-    inputs: "This is the text sent to the model: " + text,
+    inputs: text,
     parameters: {},
   }).then((response) => {
-    console.log(JSON.stringify(response));
+    appendMessage("bot", response[0].generated_text)
   });
 
   appendMessage("user", text);
@@ -36,7 +33,6 @@ function get(selector, root = document) {
 }
 
 async function query(data) {
-  console.log(JSON.stringify(data));
   const response = await fetch(
     "https://xevhza5rhd1jhkq8.us-east-1.aws.endpoints.huggingface.cloud",
     {
