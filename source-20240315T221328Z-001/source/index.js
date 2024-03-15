@@ -2,13 +2,19 @@ const chatForm = get("form");
 const chatInput = get("input");
 const chatBox = get("main");
 
+const introText = 'Hello, I am a medical bot that can help you determine the severity and actions to take reagarding a medical problem.'
+const medInfo = 'Please provide me the following informations regarding your medical situation:Age, Sex, Pre-existing conditions as well as current condition'
+
+appendMessage('bot', introText)
+appendMessage('bot', medInfo)
+
 chatForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const text = chatInput.value;
   if (!text) return;
 
   query({
-    inputs: text,
+    inputs: 'Question:' + text + 'How critical is my condition and whats actions should i take?' + 'Answer:',
     parameters: {},
   }).then((response) => {
     appendMessage("bot", response[0].generated_text)
